@@ -60,12 +60,14 @@ $events = json_decode($content, true);
 if(!is_null($events)){
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
     $replyToken = $events['events'][0]['replyToken'];
-
-    $textReplyMessage = json_encode($events);
-	$replyData = new TextMessageBuilder($textReplyMessage);  
+    $userID = $events['events'][0]['source']['userId'];
+    $sourceType = $events['events'][0]['source']['type'];
+	$textReplyMessage = 'สวัสดีครับ คุณ '.$userData['displayName'];
+	$replyData = new TextMessageBuilder($textReplyMessage);
 }
 // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
 // $textMessageBuilder = new TextMessageBuilder(json_encode($events));
+
  
 //l ส่วนของคำสั่งตอบกลับข้อความ
 $response = $bot->replyMessage($replyToken,$replyData);
