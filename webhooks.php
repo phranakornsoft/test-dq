@@ -74,7 +74,7 @@ if ($message == "location_check") {
 	$packageID = 2;
 	$replyData = new StickerMessageBuilder($packageID,$stickerID);
 } elseif ($message == "images_check") {
-	$imageMapUrl = 'https://res.cloudinary.com/ginja-co-ltd/image/upload/s--jOaq21IL--/c_fill,h_300,q_jpegmini,w_485/v1/brands/6/inventory/products/18591-coconut-with-toasted-coconut-f-bpxnMg';
+	$imageMapUrl = 'https://line.phranakornsoft.com/dq-th/product-01.jpg';
 	$replyData = new ImagemapMessageBuilder(
 	$imageMapUrl, 'This is Title',
 	new BaseSizeBuilder(699,1040),
