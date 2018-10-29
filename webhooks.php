@@ -75,7 +75,10 @@ if ($message == "test") {
 			)
 		)
 	);
-} elseif ($message == "check") {
+} elseif ($message == "check_error") {
+	$textReplyMessage = json_encode($events);
+	$replyData = new TextMessageBuilder($textReplyMessage);
+} else {
 	$textReplyMessage = json_encode($events);
 	$replyData = new TextMessageBuilder($textReplyMessage);
 }
