@@ -101,39 +101,50 @@ if ($message == "location_check") {
 	            )
 	    )
 	);
-}  else {
+} elseif ($message == "action_check") {
+	// กำหนด action 4 ปุ่ม 4 ประเภท
+	$actionBuilder = array(
+	    new MessageTemplateActionBuilder(
+	        'Message Template',// ข้อความแสดงในปุ่ม
+	        'This is Text' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+	    ),
+	    new UriTemplateActionBuilder(
+	        'Uri Template', // ข้อความแสดงในปุ่ม
+	        'https://www.ninenik.com'
+	    ),
+	    new DatetimePickerTemplateActionBuilder(
+	        'Datetime Picker', // ข้อความแสดงในปุ่ม
+	        http_build_query(array(
+	            'action'=>'reservation',
+	            'person'=>5
+	        )), // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
+	        'datetime', // date | time | datetime รูปแบบข้อมูลที่จะส่ง ในที่นี้ใช้ datatime
+	        substr_replace(date("Y-m-d H:i"),'T',10,1), // วันที่ เวลา ค่าเริ่มต้นที่ถูกเลือก
+	        substr_replace(date("Y-m-d H:i",strtotime("+5 day")),'T',10,1), //วันที่ เวลา มากสุดที่เลือกได้
+	        substr_replace(date("Y-m-d H:i"),'T',10,1) //วันที่ เวลา น้อยสุดที่เลือกได้
+	    ),      
+	    new PostbackTemplateActionBuilder(
+	        'Postback', // ข้อความแสดงในปุ่ม
+	        http_build_query(array(
+	            'action'=>'buy',
+	            'item'=>100
+	        )) // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
+	//                          'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+	    ),      
+	);
+	$imageUrl = 'https://line.phranakornsoft.com/dq-th/product-01.jpg';
+	$replyData = new TemplateMessageBuilder('Button Template',
+	    new ButtonTemplateBuilder(
+	            'button template builder', // กำหนดหัวเรื่อง
+	            'Please select', // กำหนดรายละเอียด
+	            $imageUrl, // กำหนด url รุปภาพ
+	            $actionBuilder  // กำหนด action object
+	    )
+	);
+} else {
 	$textReplyMessage = json_encode($events);
 	$replyData = new TextMessageBuilder($textReplyMessage);
 }
-
-// if(!is_null($events)){
-//     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-//     $replyToken = $events['events'][0]['replyToken'];
-// 	// $userID = $events['events'][0]['source']['userId'];
-// 	// $sourceType = $events['events'][0]['source']['type'];
-
-// 	// ส่งข้อมูลกลับ
-// 	// $textReplyMessage = 'สวัสดีครับ';
-// 	// $replyData = new TextMessageBuilder($textReplyMessage);
-
-// 	// TemplateMessageBuilder
-// 	$replyData = new TemplateMessageBuilder('Confirm Template',
-// 		new ConfirmTemplateBuilder( 'Confirm template builder', // ข้อความแนะนหรือบอกวิธีการ หรือคำอธิบาย
-// 			array(
-// 				new MessageTemplateActionBuilder(
-// 					'Yes', // ข้อความสำหรับปุ่มแรก
-// 					'YES'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-// 				),
-// 				new MessageTemplateActionBuilder(
-// 					'No', // ข้อความสำหรับปุ่มแรก
-// 					'NO' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-// 				)
-// 			)
-// 		)
-// 	);
-// }
-// ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-// $textMessageBuilder = new TextMessageBuilder(json_encode($events));
 
  
 //l ส่วนของคำสั่งตอบกลับข้อความ
