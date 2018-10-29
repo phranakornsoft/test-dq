@@ -61,20 +61,20 @@ $message = $events['events'][0]['message']['text'];
 $replyToken = $events['events'][0]['replyToken'];
 
 if ($message == "test") {
-	$replyData = new TemplateMessageBuilder('Confirm Template',
-		new ConfirmTemplateBuilder( 'Confirm template builder', // ข้อความแนะนหรือบอกวิธีการ หรือคำอธิบาย
-			array(
-				new MessageTemplateActionBuilder(
-					'Yes', // ข้อความสำหรับปุ่มแรก
-					'YES'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-				),
-				new MessageTemplateActionBuilder(
-					'No', // ข้อความสำหรับปุ่มแรก
-					'NO' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-				)
-			)
-		)
-	);
+	// $replyData = new TemplateMessageBuilder('Confirm Template',
+	// 	new ConfirmTemplateBuilder( 'Confirm template builder', // ข้อความแนะนหรือบอกวิธีการ หรือคำอธิบาย
+	// 		array(
+	// 			new MessageTemplateActionBuilder(
+	// 				'Yes', // ข้อความสำหรับปุ่มแรก
+	// 				'YES'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+	// 			),
+	// 			new MessageTemplateActionBuilder(
+	// 				'No', // ข้อความสำหรับปุ่มแรก
+	// 				'NO' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+	// 			)
+	// 		)
+	// 	)
+	// );
 } elseif ($message == "check_error") {
 	$textReplyMessage = json_encode($events);
 	$replyData = new TextMessageBuilder($textReplyMessage);
