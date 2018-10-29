@@ -57,17 +57,10 @@ $content = file_get_contents('php://input');
  
 // แปลงข้อความรูปแบบ JSON  ให้อยู่ในโครงสร้างตัวแปร array
 $events = json_decode($content, true);
-if(!is_null($events)){
-    // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-    $replyToken = $events['events'][0]['replyToken'];
-	// $userID = $events['events'][0]['source']['userId'];
-	// $sourceType = $events['events'][0]['source']['type'];
+$message = $events['events'][0]['message']['text'];
+$replyToken = $events['events'][0]['replyToken'];
 
-	// ส่งข้อมูลกลับ
-	// $textReplyMessage = 'สวัสดีครับ';
-	// $replyData = new TextMessageBuilder($textReplyMessage);
-
-	// TemplateMessageBuilder
+if ($message == "test") {
 	$replyData = new TemplateMessageBuilder('Confirm Template',
 		new ConfirmTemplateBuilder( 'Confirm template builder', // ข้อความแนะนหรือบอกวิธีการ หรือคำอธิบาย
 			array(
@@ -82,7 +75,37 @@ if(!is_null($events)){
 			)
 		)
 	);
+} elseif ($message == "check") {
+	$textReplyMessage = json_encode($events);
+	$replyData = new TextMessageBuilder($textReplyMessage);
 }
+
+// if(!is_null($events)){
+//     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
+//     $replyToken = $events['events'][0]['replyToken'];
+// 	// $userID = $events['events'][0]['source']['userId'];
+// 	// $sourceType = $events['events'][0]['source']['type'];
+
+// 	// ส่งข้อมูลกลับ
+// 	// $textReplyMessage = 'สวัสดีครับ';
+// 	// $replyData = new TextMessageBuilder($textReplyMessage);
+
+// 	// TemplateMessageBuilder
+// 	$replyData = new TemplateMessageBuilder('Confirm Template',
+// 		new ConfirmTemplateBuilder( 'Confirm template builder', // ข้อความแนะนหรือบอกวิธีการ หรือคำอธิบาย
+// 			array(
+// 				new MessageTemplateActionBuilder(
+// 					'Yes', // ข้อความสำหรับปุ่มแรก
+// 					'YES'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+// 				),
+// 				new MessageTemplateActionBuilder(
+// 					'No', // ข้อความสำหรับปุ่มแรก
+// 					'NO' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+// 				)
+// 			)
+// 		)
+// 	);
+// }
 // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
 // $textMessageBuilder = new TextMessageBuilder(json_encode($events));
 
