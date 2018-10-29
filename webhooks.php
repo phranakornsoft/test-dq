@@ -73,7 +73,39 @@ if ($message == "location_check") {
 	$stickerID = 22;
 	$packageID = 2;
 	$replyData = new StickerMessageBuilder($packageID,$stickerID);
-} else {
+} elseif ($message == "images_check") {
+	$imageMapUrl = 'https://res.cloudinary.com/ginja-co-ltd/image/upload/s--jOaq21IL--/c_fill,h_300,q_jpegmini,w_485/v1/brands/6/inventory/products/18591-coconut-with-toasted-coconut-f-bpxnMg';
+	$replyData = new ImagemapMessageBuilder(
+	$imageMapUrl, 'This is Title',
+	new BaseSizeBuilder(699,1040),
+		array(
+		new ImagemapMessageActionBuilder(
+			'test image map',
+			new AreaBuilder(0,0,520,699)
+		),
+		new ImagemapUriActionBuilder(
+			'http://www.ninenik.com',
+			new AreaBuilder(520,0,520,699)
+		)
+		)
+	);
+} elseif ($message == "confirm_check") {
+	$replyData = new TemplateMessageBuilder('Confirm Template',
+	    new ConfirmTemplateBuilder(
+	            'Confirm template builder',
+	            array(
+	                new MessageTemplateActionBuilder(
+	                    'Yes',
+	                    'Text Yes'
+	                ),
+	                new MessageTemplateActionBuilder(
+	                    'No',
+	                    'Text NO'
+	                )
+	            )
+	    )
+	);
+}  else {
 	$textReplyMessage = json_encode($events);
 	$replyData = new TextMessageBuilder($textReplyMessage);
 }
