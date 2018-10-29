@@ -17,9 +17,9 @@ require_once 'bot_settings.php';
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
-//use LINE\LINEBot\Event;
-//use LINE\LINEBot\Event\BaseEvent;
-//use LINE\LINEBot\Event\MessageEvent;
+use LINE\LINEBot\Event;
+use LINE\LINEBot\Event\BaseEvent;
+use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\MessageBuilder;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
@@ -60,24 +60,19 @@ $events = json_decode($content, true);
 $message = $events['events'][0]['message']['text'];
 $replyToken = $events['events'][0]['replyToken'];
 
-if ($message == "test") {
-	// $replyData = new TemplateMessageBuilder('Confirm Template',
-	// 	new ConfirmTemplateBuilder( 'Confirm template builder', // ข้อความแนะนหรือบอกวิธีการ หรือคำอธิบาย
-	// 		array(
-	// 			new MessageTemplateActionBuilder(
-	// 				'Yes', // ข้อความสำหรับปุ่มแรก
-	// 				'YES'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-	// 			),
-	// 			new MessageTemplateActionBuilder(
-	// 				'No', // ข้อความสำหรับปุ่มแรก
-	// 				'NO' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-	// 			)
-	// 		)
-	// 	)
-	// );
-} elseif ($message == "check_error") {
-	$textReplyMessage = json_encode($events);
-	$replyData = new TextMessageBuilder($textReplyMessage);
+if ($message == "location_check") {
+	$placeName = "ที่ตั้งร้าน";
+	$placeAddress = "แขวง พลับพลา เขต วังทองหลาง กรุงเทพมหานคร ประเทศไทย";
+	$latitude = 13.780401863217657;
+	$longitude = 100.61141967773438;
+	$replyData = new LocationMessageBuilder($placeName, $placeAddress, $latitude ,$longitude);
+} elseif ($message == "audio_check") {
+	$audioUrl = "https://www.ninenik.com/line/S_6988827932080.wav";
+	$replyData = new AudioMessageBuilder($audioUrl,20000);
+} elseif ($message == "sticker_check") {
+	$stickerID = 22;
+	$packageID = 2;
+	$replyData = new StickerMessageBuilder($packageID,$stickerID);
 } else {
 	$textReplyMessage = json_encode($events);
 	$replyData = new TextMessageBuilder($textReplyMessage);
