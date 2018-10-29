@@ -142,7 +142,7 @@ if ($message == "location_check") {
 	            $actionBuilder  // กำหนด action object
 	    )
 	);
-} elseif ($message == "สินค้าใหม่") {
+} elseif ($message == "action2_check") {
 	// กำหนด action 4 ปุ่ม 4 ประเภท
 	$actionBuilder = array(
 	    new MessageTemplateActionBuilder(
