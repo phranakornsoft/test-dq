@@ -60,7 +60,39 @@ $events = json_decode($content, true);
 $message = $events['events'][0]['message']['text'];
 $replyToken = $events['events'][0]['replyToken'];
 
-if ($message == "location_check") {
+if ($message == "สินค้าใหม่") {
+	// กำหนด action ปุ่ม
+	$actionBuilder = array(
+	    new UriTemplateActionBuilder(
+	        '฿179.00', // ข้อความแสดงในปุ่ม
+	        'https://www.dairyqueenthailand.com'
+	    ),
+	);
+	$replyData = new TemplateMessageBuilder('Carousel',
+	    new CarouselTemplateBuilder(
+	        array(
+	            new CarouselColumnTemplateBuilder(
+	                'บลิซซาร์ด® มะพร้าวน้ำหอมกับเนื้อมะพร้าวคั่ว x2',
+	                'บลิซซาร์ด® มะพร้าวน้ำหอมกับเนื้อมะพร้าวคั่ว ขนาด XL 2 แก้ว และน้ำแข็งแห้ง',
+	                'https://line.phranakornsoft.com/dq-th/img/product-01.jpg',
+	                $actionBuilder
+	            ),new CarouselColumnTemplateBuilder(
+	                'บลิซซาร์ด® มะพร้าวน้ำหอมกับข้าวเหนียว x2',
+	                'บลิซซาร์ด® มะพร้าวน้ำหอมกับข้าวเหนียว ขนาด XL 2 แก้วและ น้ำแข็งแห้ง',
+	                'https://line.phranakornsoft.com/dq-th/img/product-02.jpg',
+	                $actionBuilder
+	            ),
+	            new CarouselColumnTemplateBuilder(
+					'บลิซซาร์ด® มะพร้าวน้ำหอมกับเนื้อมะพร้าวคั่ว x1 +',
+	                'บลิซซาร์ด® มะพร้าวน้ำหอมกับข้าวเหนียว x1 (ขนาด XL ทั้งคู่)',
+	                'https://line.phranakornsoft.com/dq-th/img/product-03.jpg',
+	                $actionBuilder
+	            ),
+			)
+	    )
+	);
+
+} elseif ($message == "location_check") {
 	$placeName = "ที่ตั้งร้าน";
 	$placeAddress = "แขวง พลับพลา เขต วังทองหลาง กรุงเทพมหานคร ประเทศไทย";
 	$latitude = 13.780401863217657;
